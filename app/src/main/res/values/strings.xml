@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Chatuk</string>
+    <string name="enter_chat_message">Enter chat message</string>
+</resources>
