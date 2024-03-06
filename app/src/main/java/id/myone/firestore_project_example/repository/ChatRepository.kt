@@ -35,7 +35,16 @@ class ChatRepository(
                 error.printStackTrace()
                 return@addSnapshotListener
             }
-            val chatList = value?.toObjects(ChatItemModel::class.java)
+            val chatList = value?.documents?.mapNotNull {
+                ChatItemModel(
+                    id = it.getString("id") ?: "",
+                    message = it.getString("message") ?: "",
+                    userProfile = it.getString("userProfile") ?: "",
+                    userName = it.getString("userName") ?: "",
+                    time = it.getString("time") ?: ""
+                )
+            }
+
             chatList?.let { trySend(it) }
         }
 

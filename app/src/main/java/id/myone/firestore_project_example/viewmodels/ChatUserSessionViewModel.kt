@@ -36,12 +36,10 @@ class ChatUserSessionViewModel(
     }
 
     private fun getChatUserSession() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                val result = repository.getChatUserSession()
-                chatUserSessionDataStore.value = result
+        viewModelScope.launch(Dispatchers.IO) {
+            val result = repository.getChatUserSession()
+            chatUserSessionDataStore.value = result
 
-            }
         }
     }
 

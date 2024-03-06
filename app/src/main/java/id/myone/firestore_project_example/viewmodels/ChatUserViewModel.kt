@@ -1,10 +1,10 @@
 package id.myone.firestore_project_example.viewmodels
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import id.myone.firestore_project_example.models.chat.ChatItemModel
 import id.myone.firestore_project_example.repository.ChatRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -22,7 +22,7 @@ class ChatUserViewModel(
     }
 
     fun createNewChat(chatName: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.createNewChat(
                 ChatItemModel(
                     message = chatName,

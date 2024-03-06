@@ -8,11 +8,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import id.myone.firestore_project_example.ui.theme.FirestoreprojectexampleTheme
 import id.myone.firestore_project_example.ui.widget.SnackBarHostWidget
 import id.myone.firestore_project_example.viewmodels.ChannelViewModel
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
 
@@ -22,13 +24,18 @@ fun LoginChannelScreen(
     navigateToChatSession: () -> Unit = {}
 ) {
 
+    val coroutineScope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState() }
     val loginChannelResult by viewModel.loginChannelData.collectAsState(initial = null)
 
     LaunchedEffect(loginChannelResult) {
         if (loginChannelResult == true) {
-            snackBarHostState.showSnackbar("Account channel created")
             navigateToChatSession()
+
+            coroutineScope.launch {
+                snackBarHostState.showSnackbar("Account channel created")
+            }
+
         } else if (loginChannelResult == false) {
             snackBarHostState.showSnackbar("Failed to create account channel")
         }
