@@ -7,7 +7,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -18,6 +20,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,6 +30,7 @@ import id.myone.firestore_project_example.ui.theme.FirestoreprojectexampleTheme
 @Composable
 fun LoginChannelContent(
     modifier: Modifier = Modifier,
+    isLoading: Boolean = false,
     createNewUserChannel: (String) -> Unit,
 ) {
 
@@ -61,11 +65,15 @@ fun LoginChannelContent(
                 }
 
             ) {
-                Text(
-                    text = "Login Chat Channel",
-                    fontWeight = FontWeight.W600,
-                    color = MaterialTheme.colorScheme.onPrimary
-                )
+                if (isLoading) {
+                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(35.dp))
+                } else {
+                    Text(
+                        text = "Login Chat Channel",
+                        fontWeight = FontWeight.W600,
+                        color = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
             }
         }
     }
@@ -78,6 +86,7 @@ fun LoginChannelContent(
 fun LoginChannelContentPreview() {
     FirestoreprojectexampleTheme {
         LoginChannelContent(
+            isLoading = true,
             createNewUserChannel = {
 
             }

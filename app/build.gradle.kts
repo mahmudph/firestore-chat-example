@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -74,7 +75,13 @@ dependencies {
     implementation("io.insert-koin:koin-android:3.2.0")
     implementation("io.insert-koin:koin-androidx-compose:3.2.0")
 
+    // paging
+    implementation("androidx.paging:paging-runtime-ktx:3.2.1")
+    implementation("androidx.paging:paging-compose:3.2.1")
+
     implementation("androidx.core:core-splashscreen:1.0.0")
+
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
 
     testImplementation("junit:junit:4.13.2")

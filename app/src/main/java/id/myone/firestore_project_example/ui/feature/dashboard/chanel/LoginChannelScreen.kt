@@ -26,6 +26,8 @@ fun LoginChannelScreen(
 
     val coroutineScope = rememberCoroutineScope()
     val snackBarHostState = remember { SnackbarHostState() }
+
+    val loadingProcess by viewModel.isLoadingProcess.collectAsState()
     val loginChannelResult by viewModel.loginChannelData.collectAsState(initial = null)
 
     LaunchedEffect(loginChannelResult) {
@@ -48,6 +50,7 @@ fun LoginChannelScreen(
     ) {
         LoginChannelContent(
             modifier = Modifier.padding(it),
+            isLoading = loadingProcess,
             createNewUserChannel = { data ->
                 viewModel.loginChannel(data)
             }

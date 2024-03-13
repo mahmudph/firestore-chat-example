@@ -5,4 +5,6 @@ object RouteName {
     const val LoginChannel = "Login"
     const val Chat = "Chat"
     const val ChatRoom = "ChatRoom"
+    const val SelectUser = "SelectUser"
+    const val Profile = "Profile"
 }

@@ -1,7 +1,8 @@
-package id.myone.firestore_project_example.ui.feature.dashboard.chat.widget
+package id.myone.firestore_project_example.ui.feature.dashboard.selectUser.widget
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -32,13 +33,16 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import id.myone.firestore_project_example.R
-import id.myone.firestore_project_example.models.chat.ChatUserSessionModel
+import id.myone.firestore_project_example.models.channel.UserChannelModel
 import id.myone.firestore_project_example.ui.theme.FirestoreprojectexampleTheme
+import java.util.UUID
+
 
 @Composable
-fun ChatUserSessionListItem(
+fun ListUserItem(
     modifier: Modifier = Modifier,
-    chat: ChatUserSessionModel,
+    channel: UserChannelModel,
+    navigateToChatRoom: (user: UserChannelModel) -> Unit = {},
 ) {
 
     Card(
@@ -57,7 +61,10 @@ fun ChatUserSessionListItem(
         modifier = modifier
             .padding(8.dp)
             .fillMaxWidth()
-            .wrapContentHeight(),
+            .wrapContentHeight()
+            .clickable {
+                navigateToChatRoom(channel)
+            },
     ) {
         Row(
             modifier = modifier
@@ -68,7 +75,7 @@ fun ChatUserSessionListItem(
 
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(chat.userAvatar)
+                    .data(channel.avatar)
                     .crossfade(true)
                     .build(),
                 contentDescription = null,
@@ -91,15 +98,16 @@ fun ChatUserSessionListItem(
             ) {
 
                 Text(
-                    text = chat.username,
+                    text = channel.userName,
                     style = TextStyle(
                         fontSize = 22.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Black
                     )
                 )
+
                 Text(
-                    text = chat.userId,
+                    text = channel.timestamp.toString(),
                     style = TextStyle(fontSize = 10.sp, color = Color.Gray),
                     fontStyle = FontStyle.Italic
                 )
@@ -110,15 +118,14 @@ fun ChatUserSessionListItem(
 
 
 @Composable
-@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF, widthDp = 480, heightDp = 320)
-private fun ChatListItemPreview() {
+@Preview(showBackground = true, backgroundColor = 0xFFFFFFFF)
+private fun ListUserItemPreview() {
     FirestoreprojectexampleTheme {
-        ChatUserSessionListItem(
-            chat = ChatUserSessionModel(
-                chatId = "1",
-                userId = "2121212",
-                username = "John Doe",
-                userAvatar = "https://www.w3schools.com/howto/img_avatar.png",
+        ListUserItem(
+            channel = UserChannelModel(
+                id = UUID.randomUUID().toString(),
+                userName = "John Doe",
+                avatar = "https://www.w3schools.com/howto/img_avatar.png",
             )
         )
     }

@@ -1,6 +1,5 @@
-package id.myone.firestore_project_example.ui.feature.dashboard.chat.widget
+package id.myone.firestore_project_example.ui.feature.dashboard.session.widget
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -46,7 +45,7 @@ fun AvatarProfile(
                 .size(50.dp, 50.dp)
                 .border(1.dp, color = Color.Gray, shape = CircleShape)
                 .clip(CircleShape)
-                .clickable { onClick() },
+                .clickable(onClick = onClick),
             contentScale = ContentScale.Crop,
             placeholder = painterResource(id = R.drawable.placeholder),
             contentDescription = null,
