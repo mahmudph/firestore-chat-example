@@ -40,7 +40,7 @@ fun ChatMasterListContent(
     modifier: Modifier = Modifier,
     userId: String,
     userChannelList: List<UserChannelModel>,
-//    chatMasterList: List<ChatUserSessionModel>,
+    chatMasterList: List<ChatUserSessionModel>,
     chatMasterPagingList: LazyPagingItems<ChatUserSessionModel>? = null,
     deleteSession: (sessionId: String) -> Unit = {},
     navigateToProfile: () -> Unit = {},
@@ -85,68 +85,89 @@ fun ChatMasterListContent(
                     }
                 }
 
-                items(chatMasterPagingList?.itemCount ?: 0) { index ->
+                items(chatMasterList.size) { index ->
                     ChatUserSessionListItem(
-                        sessionId = chatMasterPagingList?.get(index)!!.id,
-                        user = if (chatMasterPagingList[index]!!.sender.id == userId) chatMasterPagingList[index]!!.receiver else chatMasterPagingList[index]!!.sender,
+                        sessionId = chatMasterList[index].id,
+                        user = if (chatMasterList[index].sender.id == userId) chatMasterList[index].receiver else chatMasterList[index].sender,
                         modifier = Modifier.combinedClickable(
                             onClick = {
                                 navigateToCreateChat(
                                     CreateSessionInfo(
-                                        chatMasterPagingList[index]!!.id,
-                                        chatMasterPagingList[index]!!.mapToUser(
-                                            chatMasterPagingList[index]!!.sender.id == userId
+                                        chatMasterList[index].id,
+                                        chatMasterList[index].mapToUser(
+                                            chatMasterList[index].sender.id == userId
                                         )
                                     )
                                 )
                             },
                             onLongClick = {
-                                deleteSession(chatMasterPagingList[index]!!.id)
+                                deleteSession(chatMasterList[index].id)
                             }
                         )
                     )
                 }
+//
+//                items(chatMasterPagingList?.itemCount ?: 0) { index ->
+//                    ChatUserSessionListItem(
+//                        sessionId = chatMasterPagingList?.get(index)!!.id,
+//                        user = if (chatMasterPagingList[index]!!.sender.id == userId) chatMasterPagingList[index]!!.receiver else chatMasterPagingList[index]!!.sender,
+//                        modifier = Modifier.combinedClickable(
+//                            onClick = {
+//                                navigateToCreateChat(
+//                                    CreateSessionInfo(
+//                                        chatMasterPagingList[index]!!.id,
+//                                        chatMasterPagingList[index]!!.mapToUser(
+//                                            chatMasterPagingList[index]!!.sender.id == userId
+//                                        )
+//                                    )
+//                                )
+//                            },
+//                            onLongClick = {
+//                                deleteSession(chatMasterPagingList[index]!!.id)
+//                            }
+//                        )
+//                    )
+//                }
 
-
-                chatMasterPagingList?.apply {
-                    when {
-                        loadState.refresh is LoadState.Loading -> {
-                            item {
-                                CircularProgressIndicator(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .wrapContentHeight()
-                                        .padding(16.dp)
-                                )
-                            }
-                        }
-
-                        loadState.refresh is LoadState.Error -> {
-                            val error = chatMasterPagingList.loadState.refresh as LoadState.Error
-                            item {
-                                Text(text = error.error.localizedMessage!!)
-                            }
-                        }
-
-                        loadState.append is LoadState.Loading -> {
-                            item {
-                                CircularProgressIndicator(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .wrapContentHeight()
-                                        .padding(16.dp)
-                                )
-                            }
-                        }
-
-                        loadState.append is LoadState.Error -> {
-                            val error = chatMasterPagingList.loadState.append as LoadState.Error
-                            item {
-                                Text(text = error.error.localizedMessage!!)
-                            }
-                        }
-                    }
-                }
+//                chatMasterPagingList?.apply {
+//                    when {
+//                        loadState.refresh is LoadState.Loading -> {
+//                            item {
+//                                CircularProgressIndicator(
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .wrapContentHeight()
+//                                        .padding(16.dp)
+//                                )
+//                            }
+//                        }
+//
+//                        loadState.refresh is LoadState.Error -> {
+//                            val error = chatMasterPagingList.loadState.refresh as LoadState.Error
+//                            item {
+//                                Text(text = error.error.localizedMessage!!)
+//                            }
+//                        }
+//
+//                        loadState.append is LoadState.Loading -> {
+//                            item {
+//                                CircularProgressIndicator(
+//                                    modifier = Modifier
+//                                        .fillMaxWidth()
+//                                        .wrapContentHeight()
+//                                        .padding(16.dp)
+//                                )
+//                            }
+//                        }
+//
+//                        loadState.append is LoadState.Error -> {
+//                            val error = chatMasterPagingList.loadState.append as LoadState.Error
+//                            item {
+//                                Text(text = error.error.localizedMessage!!)
+//                            }
+//                        }
+//                    }
+//                }
             }
         }
     }
@@ -176,23 +197,22 @@ fun ChatMasterListContentPreview() {
                 ),
             ),
 
-//            chatMasterList = listOf(
-//                ChatUserSessionModel(
-//                    sender = ChatUserSessionModel.User(
-//                        id = "1",
-//                        userName = "Jhon doe",
-//                        avatar = "https://www.w3schools.com/howto/img_avatar.png",
-//                    ),
-//                    receiver = ChatUserSessionModel.User(
-//                        id = "1",
-//                        userName = "Jhon doe",
-//                        avatar = "https://www.w3schools.com/howto/img_avatar.png",
-//                    ),
-//                    id = UUID.randomUUID().toString()
-//                )
-//            ),
+            chatMasterList = listOf(
+                ChatUserSessionModel(
+                    sender = ChatUserSessionModel.User(
+                        id = "1",
+                        userName = "Jhon doe",
+                        avatar = "https://www.w3schools.com/howto/img_avatar.png",
+                    ),
+                    receiver = ChatUserSessionModel.User(
+                        id = "1",
+                        userName = "Jhon doe",
+                        avatar = "https://www.w3schools.com/howto/img_avatar.png",
+                    ),
+                    id = UUID.randomUUID().toString()
+                )
+            ),
             userId = "1",
-
-            )
+        )
     }
 }

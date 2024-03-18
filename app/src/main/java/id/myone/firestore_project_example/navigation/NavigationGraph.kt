@@ -78,7 +78,11 @@ fun NavigationGraph(
                             sessionId = "", user = user
                         )
                     )
-                    navController.navigate(RouteName.ChatRoom)
+
+                    navController.navigate(RouteName.ChatRoom) {
+                        popUpTo(RouteName.ChatRoom) { inclusive = true }
+                        launchSingleTop = true
+                    }
                 }
             )
         }

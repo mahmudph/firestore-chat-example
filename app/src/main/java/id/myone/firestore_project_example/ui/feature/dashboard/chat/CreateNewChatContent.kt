@@ -76,7 +76,7 @@ fun CreateNewChatContent(
                     modifier = Modifier
                         .padding(top = 12.dp)
                         .background(MaterialTheme.colorScheme.background)
-                        .fillMaxHeight()
+                        .wrapContentHeight()
                 ) {
 
                     items(chatItems.size) { index ->
@@ -114,6 +114,7 @@ fun CreateNewChatContent(
                             placeholder = {
                                 Text(text = stringResource(R.string.enter_chat_message))
                             },
+
                             shape = RoundedCornerShape(16.dp)
                         )
 

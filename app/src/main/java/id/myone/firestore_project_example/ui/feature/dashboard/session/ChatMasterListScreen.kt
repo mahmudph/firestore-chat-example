@@ -42,7 +42,7 @@ fun ChatMasterListScreen(
     val deleteSessionLoading by viewModel.loadingDeleteSession.collectAsState()
 
     val chatMasterErrors = viewModel.errorLiveData.collectAsState()
-//    val chatMasterList by viewModel.chatUserSessionData.collectAsState(null)
+    val chatMasterList by viewModel.chatUserSessionData.collectAsState(null)
 
     val userChannelList by viewModel.userChannelData.collectAsState(null)
     val userId = viewModel.currentUserId.collectAsState(initial = "")
@@ -80,7 +80,7 @@ fun ChatMasterListScreen(
             modifier = Modifier.padding(paddingValues),
         ) {
             ChatMasterListContent(
-//                chatMasterList = chatMasterList?.data ?: emptyList(),
+                chatMasterList = chatMasterList?.data ?: emptyList(),
                 chatMasterPagingList = userSessionChats,
                 navigateToCreateChat = { session ->
                     navigateToCreateNewChat(session)
